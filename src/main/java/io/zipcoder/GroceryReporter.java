@@ -1,18 +1,35 @@
 package io.zipcoder;
 
 import io.zipcoder.utils.FileReader;
+import io.zipcoder.utils.Item;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GroceryReporter {
     private final String  originalFileText;
 
     public GroceryReporter(String jerksonFileName) {
+
         this.originalFileText = FileReader.readFile(jerksonFileName);
     }
 
     @Override
     public String toString() {
+ItemParser itemParser= new ItemParser();
+        List<Item> items = itemParser.parseItemList(this.originalFileText);
+
+        Map<String, Integer> itemMap = new HashMap<>();
+        int errorCount = 0;
+        for (Item item : items) {
+            if (item.getName() == null) {
+                errorCount++;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
 
 return null;
     }

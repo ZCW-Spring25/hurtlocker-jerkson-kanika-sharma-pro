@@ -12,9 +12,12 @@ import java.util.regex.Pattern;
     private int errorCount = 0;
 
     public List<Item> parseItemList(String valueToParse) {
+        //empty itemList to store parsed objects
         List<Item> itemList = new ArrayList<>();
         Pattern itemPattern = Pattern.compile("##",  Pattern.CASE_INSENSITIVE);
         String [] itemString = itemPattern.split(valueToParse);
+
+
         for (String itemStrings : itemString) {
             try {
                 itemList.add(parseSingleItem(itemStrings + "##"));
