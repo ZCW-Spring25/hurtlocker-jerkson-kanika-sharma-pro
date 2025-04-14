@@ -13,10 +13,11 @@ import java.util.regex.Pattern;
 
     public List<Item> parseItemList(String valueToParse) {
         List<Item> itemList = new ArrayList<>();
-        String [] itemString = valueToParse.split("##");
-        for (String itemstring : itemString) {
+        Pattern itemPattern = Pattern.compile("##",  Pattern.CASE_INSENSITIVE);
+        String [] itemString = itemPattern.split(valueToParse);
+        for (String itemStrings : itemString) {
             try {
-                itemList.add(parseSingleItem(itemString + "##"));
+                itemList.add(parseSingleItem(itemStrings + "##"));
             } catch (ItemParseException e) {
                 e.printStackTrace();
                 errorCount++;
