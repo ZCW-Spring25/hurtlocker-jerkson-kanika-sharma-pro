@@ -8,25 +8,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.beans.NameGenerator.capitalize;
+
 public class GroceryReporter {
     private final String  originalFileText;
 
-    public GroceryReporter(String jerksonFileName) {
 
+    //constructor to read file
+    public GroceryReporter(String jerksonFileName) {
         this.originalFileText = FileReader.readFile(jerksonFileName);
     }
 
+
+    //converts the grocery report into a formatted string
     @Override
     public String toString() {
 ItemParser itemParser= new ItemParser();
-        List<Item> items = itemParser.parseItemList(this.originalFileText);
+        List<Item> items = itemParser.parseItemList(this.originalFileText); //extracting object items from itemParser class
 
-        Map<String, Integer> itemMap = new HashMap<>();
+
+
+
+
+//itemPriceMap stores all prices, itemCountMap stores how many times each item appears
+Map<String, List<Double>> itemPriceMap = new HashMap<>();
+        Map<String, Integer> itemCountMap = new HashMap<>();
         int errorCount = 0;
+
+
+        //if name and price are missing then it counts it as an error
         for (Item item : items) {
-            if (item.getName() == null) {
-                errorCount++;
+            if (item.getName() == null || item.getPrice() == null ) {
+                errorCount++;//counts no. of broken entries
+                continue;
             }
+            String nameKey = capitalize(item.getName());// first letter of item names are capitalized and rest in small letters
         }
 
         StringBuilder sb = new StringBuilder();
@@ -34,16 +50,13 @@ ItemParser itemParser= new ItemParser();
 return null;
     }
 
-
+//for each item name, it counts how many times each price appears
     public String getOriginalFileText() {
         return originalFileText;
     }
 }
-//public static String reverseFirstWordThenCamelCase(String sentence) {
-//        String [] words = sentence.split("\\W+");
-//        String first = words [0];
-//        String reverse = new StringBuilder(first).reverse().toString();
-//        return reverse.substring(0, 1).toUpperCase() + reverse.substring(1);
+
+//
 //    }
 //public String split(String regex)
 //
